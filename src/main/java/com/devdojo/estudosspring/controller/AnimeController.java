@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,5 +33,18 @@ public class AnimeController {
         return new ResponseEntity<>(animeService.replace(dto), HttpStatus.OK);
     }
 
+    @RequestMapping("/name")
+    ResponseEntity<Stream<AnimeDTO>> findByName(@RequestBody AnimeDTO dto) {
+        return new ResponseEntity<>( animeService.findByName(dto), HttpStatus.OK);
+    }
+
+    @RequestMapping("/{id}")
+    ResponseEntity<AnimeDTO> findById(@PathVariable Long id) {
+        return new ResponseEntity<>(animeService.getById(id), HttpStatus.OK);
+    }
+    @DeleteMapping("/{id}")
+    void delete(@PathVariable Long id) {
+        animeService.remove(id);
+    }
 
 }
